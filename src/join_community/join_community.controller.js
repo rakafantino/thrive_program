@@ -1,6 +1,7 @@
 import { createCommunity } from "../community/community.model.js";
 import { userIdGetter } from "../utils/userIdGetter.js";
 import { joinCommunity } from "./join_community.model.js";
+import * as Cloudinary from "../utils/cloudinary.js";
 
 export const joinACommunity = async (req, res) => {
   const id = await userIdGetter(req);
@@ -31,7 +32,10 @@ export const joinACommunity = async (req, res) => {
 
 export const createACommunity = async (req, res) => {
   const user_id = await userIdGetter(req);
-  const { title, description, logo } = req.body;
+  const { title, description } = req.body;
+
+  const uploadImage = await Cloudinary.default.uploader.upload(req.file.path);
+  const logo = uploadImage.url;
 
   if (!title && !description) {
     return res.status(400).json({
@@ -44,11 +48,9 @@ export const createACommunity = async (req, res) => {
   }
 
   const community_id = await createCommunity(title, description, logo);
-  const isAdmin = {
-    role: "admin",
-  };
+  const isAdmin = "admin";
 
-  const inputJoinCommunity = await joinCommunity(user_id, community_id.id, isAdmin.role);
+  await joinCommunity(user_id, community_id.id, isAdmin);
 
   return res.status(200).json({
     meta: {
@@ -57,5 +59,3 @@ export const createACommunity = async (req, res) => {
     },
   });
 };
-
-

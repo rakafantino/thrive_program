@@ -85,8 +85,9 @@ export const getUserbyUsername = async (username) => {
 };
 
 export const editUserProfile = async (id, req) => {
-  const editedUser = await Users.update(req, { where: { id } });
-  return editedUser;
+  await Users.update(req, { where: { id } });
+  const userData = await Users.findByPk(id);
+  return userData;
 };
 
 export const deleteUser = (id) => {
