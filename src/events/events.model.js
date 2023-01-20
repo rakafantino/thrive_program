@@ -21,7 +21,7 @@ const Events = newSeq.define(
       allowNull: false,
     },
     location: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
     },
     community_id: {
@@ -46,8 +46,9 @@ newSeq
     console.error("Unable to create table : ", error);
   });
 
-export const createEvent = async (req) => {
-  const event = await Events.create(req);
+export const createEvent = async (req, community_id) => {
+  const { title, description, price, date, location } = req;
+  const event = await Events.create({ title, description, price, date, location, community_id });
 
   return event;
 };
