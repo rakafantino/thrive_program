@@ -47,3 +47,9 @@ export const joinCommunity = async (user_id, community_id, role) => {
     return errorMessage;
   }
 };
+
+export const getUserRole = async (user_id, community_id) => {
+  const getRole = await JoinCommunity.findOne({ where: { user_id, community_id, role: "admin" } });
+
+  return getRole.role;
+};

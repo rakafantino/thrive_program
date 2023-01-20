@@ -1,5 +1,6 @@
 import { userIdGetter } from "../utils/userIdGetter.js";
 import { createUser, editUserProfile, getUserbyId } from "./users.model.js";
+import * as Cloudinary from "../utils/cloudinary.js";
 
 //Create a new user / register user
 export const userCreateRest = async (req, res) => {
@@ -44,7 +45,7 @@ export const userGetByIDRest = async (req, res) => {
     return res.status(400).json({
       meta: {
         code: 400,
-        message: "Some input are required",
+        message: "user id is not found or undefined",
       },
       data: {},
     });
@@ -64,7 +65,10 @@ export const userGetByIDRest = async (req, res) => {
   return res.status(200).json({
     meta: {
       code: 200,
-      message: `Success get user ${respModel}.`,
+      message: `Success get user ${respModel.name}.`,
+    },
+    data: {
+      user: respModel,
     },
   });
 };
@@ -72,7 +76,10 @@ export const userGetByIDRest = async (req, res) => {
 export const editUser = async (req, res) => {
   const id = await userIdGetter(req);
 
-  const respModel = await editUserProfile(id, req.body);
+  const { name, username, email, password } = req.body;
+  const uploadImage = await Cloudinary.default.uploader.upload(req.file.path);
+  const photo = uploadImage.url;
+  const respModel = await editUserProfile(id, { name, username, email, password, photo });
 
   return res.status(200).json({
     meta: {

@@ -43,3 +43,9 @@ export const createCommunity = async (title, description, logo) => {
 
   return community;
 };
+
+export const updateCommunity = async (title, description, logo) => {
+  const community = await Communities.update({ title, description, logo });
+
+  return community;
+};

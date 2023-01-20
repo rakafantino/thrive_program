@@ -1,9 +1,9 @@
 import { Router } from "express";
 import { verifyToken } from "../middleware/auth.js";
-import { getAllCommunity } from "./community.controller.js";
+import { createAnEvent } from "./events.controller.js";
 
 const router = Router();
 
-router.get("/", verifyToken, getAllCommunity);
+router.post("/:id/event", verifyToken, createAnEvent);
 
 export default router;
