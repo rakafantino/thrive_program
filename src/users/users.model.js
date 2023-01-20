@@ -26,6 +26,10 @@ const Users = newSeq.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    photo: {
+      type: DataTypes.STRING,
+      defaultValue: null,
+    },
     status: {
       type: DataTypes.BOOLEAN,
       defaultValue: true,
@@ -68,7 +72,7 @@ export const getUserbyId = async (id) => {
   if (user === null) {
     return "user not found";
   }
-  return user.name;
+  return user;
 };
 
 export const getUserbyUsername = async (username) => {

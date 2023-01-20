@@ -14,25 +14,25 @@ export const getAllCommunity = async (req, res) => {
   });
 };
 
-export const createACommunity = async (req, res) => {
-  const { title, description, logo } = req.body;
+// export const createACommunity = async (req, res) => {
+//   const { title, description, logo } = req.body;
 
-  if (!title && !description) {
-    return res.status(400).json({
-      meta: {
-        code: 400,
-        message: "Some input are required",
-      },
-      data: {},
-    });
-  }
+//   if (!title && !description) {
+//     return res.status(400).json({
+//       meta: {
+//         code: 400,
+//         message: "Some input are required",
+//       },
+//       data: {},
+//     });
+//   }
 
-  // const community = await createCommunity(title, description, logo);
+//   const community = await createCommunity(title, description, logo);
 
-  return res.status(200).json({
-    meta: {
-      code: 200,
-      message: `Success create community with title ${community}`,
-    },
-  });
-};
+//   return res.status(200).json({
+//     meta: {
+//       code: 200,
+//       message: `Success create community with title ${community}`,
+//     },
+//   });
+// };
